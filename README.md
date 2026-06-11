@@ -209,6 +209,15 @@ El gráfico de barras muestra la distribución de ventas de Salsa por país. USA
 | **RA4** | Herramienta de visualización BI | Metabase v0.49.6 en contenedor Docker, conectado a PostgreSQL por red interna |
 | **RA2** | Dashboard | 3 gráficos que responden explícitamente a las 3 preguntas de negocio |
 
+### Evidencia RA1 — Ejecución del ETL
+
+![ETL consola parte 1](screenshots/00_etl_consola_1.png)
+![ETL consola parte 2](screenshots/00_etl_consola_2.png)
+
+### Evidencia RA4 — Conexión Metabase y datos
+
+![Metabase tabla ventas](screenshots/00_metabase_conexion_tabla.png)
+
 ---
 
 ## Posibles mejoras
