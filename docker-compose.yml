@@ -1,0 +1,65 @@
+﻿services:
+
+  # ─────────────────────────────────────────
+  # SERVICIO 1: Base de datos PostgreSQL 15
+  # ─────────────────────────────────────────
+  postgres:
+    image: postgres:15
+    container_name: sbg_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: musicdb
+      POSTGRES_USER: sbguser
+      POSTGRES_PASSWORD: sbgpass123
+
+    ports:
+      - "5432:5432"        # Expuesto al host para que el ETL pueda conectar
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data   # Persistencia de datos
+
+    networks:
+      - sbg_network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sbguser -d musicdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────
+  # SERVICIO 2: Metabase (herramienta BI)
+  # ─────────────────────────────────────────
+  metabase:
+    image: metabase/metabase:v0.49.6
+    container_name: sbg_metabase
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"        # Acceso desde el navegador en localhost:3000
+
+    environment:
+      MB_DB_TYPE: h2       # Metabase guarda su config interna en H2 (suficiente para este proyecto)
+
+    depends_on:
+      postgres:
+        condition: service_healthy   # Espera a que Postgres esté listo antes de arrancar
+
+    networks:
+      - sbg_network
+
+# ─────────────────────────────────────────
+# RED INTERNA
+# ─────────────────────────────────────────
+networks:
+  sbg_network:
+    driver: bridge
+    name: sbg_network
+
+# ─────────────────────────────────────────
+# VOLÚMENES PERSISTENTES
+# ─────────────────────────────────────────
+volumes:
+  postgres_data:
+    name: sbg_postgres_data
