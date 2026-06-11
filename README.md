@@ -178,7 +178,7 @@ El script muestra métricas de nulos antes y después de la limpieza, haciendo e
 
 ### Pregunta 1 — ¿Cuál fue la evolución comparativa de ventas de Rock vs Soul en los años 70?
 
-![Dashboard P1 - Rock vs Soul](screenshots/01_dashboard_p1_rock_vs_soul.png)
+![Dashboard P1 - Rock vs Soul](01_dashboard_p1_rock_vs_soul.png)
 
 El gráfico de líneas muestra la evolución anual de ventas de Rock y Soul entre 1970 y 1979. Rock mantiene un volumen de ventas consistentemente superior a Soul durante toda la década, con ambos géneros mostrando una tendencia estable con ligeras fluctuaciones anuales.
 
