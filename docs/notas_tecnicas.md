@@ -39,3 +39,21 @@ descargarse de una fuente externa. Esto garantiza:
 - Control sobre la distribución de géneros, décadas y geografías.
 - Posibilidad de introducir errores intencionados de forma controlada.
 - Independencia de URLs o APIs externas que podrían no estar disponibles.
+
+## Driver de conexion Python: pg8000
+
+Durante el desarrollo se identifico un bug conocido en psycopg2 y psycopg3
+en entornos Windows con locale en espanol: el servidor PostgreSQL envia
+mensajes de error de autenticacion en latin-1 durante la fase de startup,
+antes de que se pueda negociar la codificacion UTF-8 con el cliente.
+Esto provoca un UnicodeDecodeError en psycopg al intentar decodificar
+dichos mensajes.
+
+La solucion adoptada fue usar pg8000, un driver PostgreSQL escrito
+enteramente en Python puro, sin dependencias de libpq ni del sistema
+operativo. pg8000 no tiene este problema porque implementa el protocolo
+de comunicacion de PostgreSQL de forma independiente.
+
+Adicionalmente, el PostgreSQL nativo de Windows ocupaba el puerto 5432,
+por lo que el contenedor Docker se expone en el puerto 5455 del host.
+Internamente el contenedor sigue usando el puerto 5432 estandar.
